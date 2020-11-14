@@ -10,8 +10,11 @@
   },
   "author": "jay",
   "license": "ISC",
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },
   "scripts": {
-    "precommit": "npm lint",
     "start": "nodemon ./src/index.js"
   },
   "keywords": [
@@ -27,10 +30,7 @@
     "es2017",
     "mocha",
     "istanbul",
-    "nyc",
     "eslint",
-    "Travis CI",
-    "coveralls",
     "REST",
     "API",
     "ewallet"
@@ -58,23 +58,14 @@
     "passport": "^0.4.0",
     "passport-http-bearer": "^1.0.1",
     "passport-jwt": "3.0.0",
-    "pm2": "^2.4.6",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
-    "apidoc": "^0.17.6",
-    "chai": "^4.1.0",
-    "chai-as-promised": "^7.1.1",
-    "coveralls": "^3.0.0",
     "eslint": "^4.2.0",
     "eslint-config-airbnb-base": "^12.0.1",
     "eslint-plugin-import": "^2.2.0",
     "mocha": "^3.3.0",
     "nodemon": "^1.11.0",
-    "nyc": "^11.0.3",
-    "opn-cli": "^3.1.0",
-    "sinon": "^4.0.1",
-    "sinon-chai": "^2.10.0",
-    "supertest": "^3.0.0"
+    "nyc": "^11.0.3"
   }
 }
