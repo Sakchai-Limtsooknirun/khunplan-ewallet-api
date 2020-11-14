@@ -6,7 +6,7 @@
   "private": false,
   "apidoc": {
     "title": "Custom apiDoc browser title",
-    "url" : "https://khunplan-ewallet-api.herokuapp.com/"
+    "url": "https://khunplan-ewallet-api.herokuapp.com/"
   },
   "repository": {
     "type": "git",
