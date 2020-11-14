@@ -25,13 +25,13 @@ router
    *
    * @apiHeader {String} Athorization  Customer's access token
    *
-   * @apiSuccess {String}  id         Customer's id
+   * @apiSuccess {String}  id                    Customer's id
    * @apiSuccess {Number}  accountNumber         Customer's accountNumber
-   * @apiSuccess {String}  name       Customer's name
-   * @apiSuccess {String}  email      Customer's email
-   * @apiSuccess {String}  role       Customer's role
-   * @apiSuccess {String}  balance    Customer's balance
-   * @apiSuccess {Date}    createdAt  Timestamp
+   * @apiSuccess {String}  name                  Customer's name
+   * @apiSuccess {String}  groupOrRoomId         Customer's groupOrRoomId
+   * @apiSuccess {String}  role                  Customer's role
+   * @apiSuccess {String}  balance               Customer's balance
+   * @apiSuccess {Date}    createdAt             Timestamp
    *
    * @apiError (Unauthorized 401) Unauthorized Only authenticated customers can access the data
    * @apiError (Forbidden 403)    Forbidden    Only customer with same id or admins can access the data
@@ -51,13 +51,13 @@ router
    *
    * @apiHeader {String} Athorization  Customer's access token
    *
-   * @apiSuccess {String}  id         Customer's id
-   * @apiSuccess {Number}  accountNumber         Customer's accountNumber
-   * @apiSuccess {String}  name       Customer's name
-   * @apiSuccess {String}  email      Customer's email
-   * @apiSuccess {String}  role       Customer's role
-   * @apiSuccess {String}  balance    Customer's balance
-   * @apiSuccess {Date}    createdAt  Timestamp
+   * @apiSuccess {String}  id                 Customer's id
+   * @apiSuccess {Number}  accountNumber      Customer's accountNumber
+   * @apiSuccess {String}  name               Customer's name
+   * @apiSuccess {String}  groupOrRoomId      Customer's groupOrRoomId
+   * @apiSuccess {String}  role               Customer's role
+   * @apiSuccess {String}  balance            Customer's balance
+   * @apiSuccess {Date}    createdAt          Timestamp
    *
    * @apiError (Unauthorized 401) Unauthorized Only authenticated customers can access the data
    * @apiError (Forbidden 403)    Forbidden    Only customer with same id or admins can access the data
@@ -93,7 +93,7 @@ router
    * @apiSuccess  {String}  customer.id             Customer's id
    * @apiSuccess  {Number}  customer.accountNumber  Customer's accountNumber
    * @apiSuccess  {String}  customer.name           Customer's name
-   * @apiSuccess  {String}  customer.email          Customer's email
+   * @apiSuccess  {String}  customer.groupOrRoomId  Customer's groupOrRoomId
    * @apiSuccess  {String}  customer.role           Customer's role
    * @apiSuccess  {Date}    customer.createdAt      Timestamp
    *
@@ -131,7 +131,7 @@ router
    * @apiSuccess  {String}  customer.id             Customer's id
    * @apiSuccess  {Number}  customer.accountNumber  Customer's accountNumber
    * @apiSuccess  {String}  customer.name           Customer's name
-   * @apiSuccess  {String}  customer.email          Customer's email
+   * @apiSuccess  {String}  customer.groupOrRoomId  Customer's groupOrRoomId
    * @apiSuccess  {String}  customer.role           Customer's role
    * @apiSuccess  {Date}    customer.createdAt      Timestamp
    *
@@ -169,7 +169,7 @@ router
    * @apiSuccess  {String}  customer.id             Customer's id
    * @apiSuccess  {Number}  customer.accountNumber  Customer's accountNumber
    * @apiSuccess  {String}  customer.name           Customer's name
-   * @apiSuccess  {String}  customer.email          Customer's email
+   * @apiSuccess  {String}  customer.groupOrRoomId  Customer's groupOrRoomId
    * @apiSuccess  {String}  customer.role           Customer's role
    * @apiSuccess  {Date}    customer.createdAt      Timestamp
    *

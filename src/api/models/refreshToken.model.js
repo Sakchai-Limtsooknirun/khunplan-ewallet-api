@@ -17,7 +17,7 @@ const refreshTokenSchema = new mongoose.Schema({
     ref: 'Customer',
     required: true,
   },
-  customerEmail: {
+  groupOrRoomId: {
     type: 'String',
     ref: 'Customer',
     required: true,
@@ -35,11 +35,11 @@ refreshTokenSchema.statics = {
    */
   generate(customer) {
     const customerId = customer._id;
-    const customerEmail = customer.email;
+    const groupOrRoomId = customer.groupOrRoomId;
     const token = `${customerId}.${crypto.randomBytes(40).toString('hex')}`;
     const expires = moment().add(30, 'days').toDate();
     const tokenObject = new RefreshToken({
-      token, customerId, customerEmail, expires,
+      token, customerId, groupOrRoomId, expires,
     });
     tokenObject.save();
     return tokenObject;

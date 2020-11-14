@@ -22,19 +22,16 @@ const roles = ['customer', 'admin'];
  * @private
  */
 const customerSchema = new mongoose.Schema({
-  email: {
+  groupOrRoomId: {
     type: String,
-    match: /^\S+@\S+\.\S+$/,
     required: true,
     unique: true,
     trim: true,
     lowercase: true,
   },
-  password: {
+  type: {
     type: String,
-    required: true,
-    minlength: 6,
-    maxlength: 128,
+    required: true
   },
   name: {
     type: String,
@@ -67,13 +64,13 @@ const customerSchema = new mongoose.Schema({
  */
 customerSchema.pre('save', async function save(next) {
   try {
-    if (!this.isModified('password')) return next();
+    // if (!this.isModified('password')) return next();
 
-    const rounds = env === 'test' ? 1 : 10;
+    // const rounds = env === 'test' ? 1 : 10;
 
-    const hash = await bcrypt.hash(this.password, rounds);
-    this.password = hash;
-
+    // const hash = await bcrypt.hash(this.password, rounds);
+    // this.password = hash;
+    console.log("pppppp");
     return next();
   } catch (error) {
     return next(error);
@@ -86,7 +83,7 @@ customerSchema.pre('save', async function save(next) {
 customerSchema.method({
   transformBalance() {
     const transformed = {};
-    const fields = ['id', 'accountNumber', 'name', 'email', 'role', 'balance', 'createdAt'];
+    const fields = ['id', 'accountNumber', 'name', 'groupOrRoomId', 'role', 'balance', 'createdAt'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];
@@ -96,7 +93,7 @@ customerSchema.method({
   },
   transform() {
     const transformed = {};
-    const fields = ['id', 'accountNumber', 'name', 'email', 'role', 'createdAt'];
+    const fields = ['id', 'accountNumber', 'name', 'groupOrRoomId', 'role', 'createdAt'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];
@@ -114,9 +111,9 @@ customerSchema.method({
     return jwt.encode(playload, jwtSecret);
   },
 
-  async passwordMatches(password) {
-    return bcrypt.compare(password, this.password);
-  },
+  // async passwordMatches(password) {
+  //   return bcrypt.compare(password, this.password);
+  // },
 });
 
 /**
@@ -161,9 +158,9 @@ customerSchema.statics = {
     const masterAccountData = {
       accountNumber: masterAccount,
       role: 'admin',
-      name: 'Master Account',
-      email: 'master_account@bank.com',
-      password: masterAccountPassword,
+      name: 'jay',
+      groupOrRoomId: 'admin',
+      type: 'admin',
     };
     try {
       let customer = await this.findOne({ 'accountNumber': masterAccountData.accountNumber }).exec();
@@ -179,29 +176,32 @@ customerSchema.statics = {
   },
 
   /**
-   * Find customer by email and tries to generate a JWT token
+   * Find customer by groupOrRoomId and tries to generate a JWT token
    *
    * @param {ObjectId} id - The objectId of customer.
    * @returns {Promise<Customer, APIError>}
    */
   async findAndGenerateToken(options) {
-    const { email, password, refreshObject } = options;
-    if (!email) throw new APIError({ message: 'An email is required to generate a token' });
+    console.log("pppppp23513");
+    const { groupOrRoomId, type, refreshObject } = options;
+    if (!groupOrRoomId) throw new APIError({ message: 'An groupOrRoomId is required to generate a token' });
 
-    const customer = await this.findOne({ email }).exec();
+    const customer = await this.findOne({ groupOrRoomId }).exec();
     const err = {
       status: httpStatus.UNAUTHORIZED,
       isPublic: true,
     };
-    if (password) {
-      if (customer && await customer.passwordMatches(password)) {
+    if (type) {
+      if (customer) {
+        console.log("xxxxx");
         return { customer, accessToken: customer.token() };
       }
-      err.message = 'Incorrect email or password';
-    } else if (refreshObject && refreshObject.customerEmail === email) {
+      err.message = 'Incorrect groupOrRoomId or type';
+    } else if (refreshObject && refreshObject.groupOrRoomId === groupOrRoomId) {
+      console.log("xx");
       return { customer, accessToken: customer.token() };
     } else {
-      err.message = 'Incorrect email or refreshToken';
+      err.message = 'Incorrect groupOrRoomId or refreshToken';
     }
     throw new APIError(err);
   },
@@ -214,9 +214,9 @@ customerSchema.statics = {
    * @returns {Promise<Customer[]>}
    */
   list({
-    page = 1, perPage = 30, name, email, role,
+    page = 1, perPage = 30, name, groupOrRoomId, role,
   }) {
-    const options = omitBy({ name, email, role }, isNil);
+    const options = omitBy({ name, groupOrRoomId, role }, isNil);
 
     return this.find(options)
       .sort({ createdAt: -1 })
@@ -237,9 +237,9 @@ customerSchema.statics = {
       return new APIError({
         message: 'Validation Error',
         errors: [{
-          field: 'email',
+          field: 'groupOrRoomId',
           location: 'body',
-          messages: ['"email" already exists'],
+          messages: ['"refreshObject" already exists'],
         }],
         status: httpStatus.CONFLICT,
         isPublic: true,

@@ -34,7 +34,7 @@ exports.register = async (req, res, next) => {
 };
 
 /**
- * Returns jwt token if valid email and password is provided
+ * Returns jwt token if valid groupOrRoomId and password is provided
  * @public
  */
 exports.login = async (req, res, next) => {
@@ -54,12 +54,12 @@ exports.login = async (req, res, next) => {
  */
 exports.refresh = async (req, res, next) => {
   try {
-    const { email, refreshToken } = req.body;
+    const { groupOrRoomId, refreshToken } = req.body;
     const refreshObject = await RefreshToken.findOneAndRemove({
-      customerEmail: email,
+      groupOrRoomId: groupOrRoomId,
       token: refreshToken,
     });
-    const { customer, accessToken } = await Customer.findAndGenerateToken({ email, refreshObject });
+    const { customer, accessToken } = await Customer.findAndGenerateToken({ groupOrRoomId, refreshObject });
     const response = generateTokenResponse(customer, accessToken);
     return res.json(response);
   } catch (error) {

@@ -17,9 +17,9 @@ const router = express.Router();
  * @apiGroup Auth
  * @apiPermission public
  *
- * @apiParam  {String}          email     Customer's email
- * @apiParam  {String{6..128}}  password  Customer's password
- * @apiParam  {String{..128}}  [name]    Customer's name
+ * @apiParam  {String}          groupOrRoomId    groupOrRoomId
+ * @apiParam  {String}  type             type of groupOrRoomId
+ * @apiParam  {String{..128}}  [name]            Customer's name
  *
  * @apiSuccess (Created 201) {String}  token.tokenType     Access Token's type
  * @apiSuccess (Created 201) {String}  token.accessToken   Authorization Token
@@ -32,7 +32,7 @@ const router = express.Router();
  * @apiSuccess (Created 201) {String}  customer.id         Customer's id
  * @apiSuccess (Created 201) {Number}  customer.accountNumber         Customer's accountNumber
  * @apiSuccess (Created 201) {String}  customer.name       Customer's name
- * @apiSuccess (Created 201) {String}  customer.email      Customer's email
+ * @apiSuccess (Created 201) {String}  customer.groupOrRoomId      Customer's groupOrRoomId
  * @apiSuccess (Created 201) {String}  customer.role       Customer's role
  * @apiSuccess (Created 201) {Date}    customer.createdAt  Timestamp
  *
@@ -50,8 +50,8 @@ router.route('/register')
  * @apiGroup Auth
  * @apiPermission public
  *
- * @apiParam  {String}         email     Customer's email
- * @apiParam  {String{..128}}  password  Customer's password
+ * @apiParam  {String}          groupOrRoomId    groupOrRoomId
+ * @apiParam  {String}  type             type of groupOrRoomId
  *
  * @apiSuccess  {String}  token.tokenType     Access Token's type
  * @apiSuccess  {String}  token.accessToken   Authorization Token
@@ -63,7 +63,7 @@ router.route('/register')
  * @apiSuccess  {String}  customer.id             Customer's id
  * @apiSuccess  {Number}  customer.accountNumber  Customer's accountNumber
  * @apiSuccess  {String}  customer.name           Customer's name
- * @apiSuccess  {String}  customer.email          Customer's email
+ * @apiSuccess  {String}  customer.groupOrRoomId  Customer's email
  * @apiSuccess  {String}  customer.role           Customer's role
  * @apiSuccess  {Date}    customer.createdAt      Timestamp
  *
@@ -82,7 +82,7 @@ router.route('/login')
  * @apiGroup Auth
  * @apiPermission public
  *
- * @apiParam  {String}  email         Customer's email
+ * @apiParam  {String}  groupOrRoomId Customer's groupOrRoomId
  * @apiParam  {String}  refreshToken  Refresh token aquired when customer logged in
  *
  * @apiSuccess {String}  tokenType     Access Token's type

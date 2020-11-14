@@ -32,7 +32,7 @@ router
    * @apiParam  {Number{1-}}         [page=1]     List page
    * @apiParam  {Number{1-100}}      [perPage=1]  Customers per page
    * @apiParam  {String}             [name]       Customer's name
-   * @apiParam  {String}             [email]      Customer's email
+   * @apiParam  {String}             [groupOrRoomId]      Customer's groupOrRoomId
    * @apiParam  {String=customer,admin}  [role]       Customer's role
    *
    * @apiSuccess {Object[]} customers List of customers.
@@ -51,15 +51,15 @@ router
    *
    * @apiHeader {String} Athorization  Customer's access token
    *
-   * @apiParam  {String}             email     Customer's email
-   * @apiParam  {String{6..128}}     password  Customer's password
+   * @apiParam  {String}             groupOrRoomId     Customer's groupOrRoomId
+   * @apiParam  {String}     type  type of groupOrRoomId
    * @apiParam  {String{..128}}      [name]    Customer's name
    * @apiParam  {String=customer,admin}  [role]    Customer's role
    *
    * @apiSuccess (Created 201) {String}  id         Customer's id
    * @apiSuccess {Number}  accountNumber         Customer's accountNumber
    * @apiSuccess (Created 201) {String}  name       Customer's name
-   * @apiSuccess (Created 201) {String}  email      Customer's email
+   * @apiSuccess (Created 201) {String}  groupOrRoomId      Customer's groupOrRoomId
    * @apiSuccess (Created 201) {String}  role       Customer's role
    * @apiSuccess (Created 201) {Date}    createdAt  Timestamp
    *
@@ -85,7 +85,7 @@ router
    * @apiSuccess {String}  id         Customer's id
    * @apiSuccess {Number}  accountNumber         Customer's accountNumber
    * @apiSuccess {String}  name       Customer's name
-   * @apiSuccess {String}  email      Customer's email
+   * @apiSuccess {String}  groupOrRoomId      Customer's groupOrRoomId
    * @apiSuccess {String}  role       Customer's role
    * @apiSuccess {Date}    createdAt  Timestamp
    *
@@ -109,7 +109,7 @@ router
    * @apiSuccess {String}  id         Customer's id
    * @apiSuccess {Number}  accountNumber         Customer's accountNumber
    * @apiSuccess {String}  name       Customer's name
-   * @apiSuccess {String}  email      Customer's email
+   * @apiSuccess {String}  groupOrRoomId      Customer's groupOrRoomId
    * @apiSuccess {String}  role       Customer's role
    * @apiSuccess {Date}    createdAt  Timestamp
    *
@@ -128,8 +128,8 @@ router
    *
    * @apiHeader {String} Athorization  Customer's access token
    *
-   * @apiParam  {String}             email     Customer's email
-   * @apiParam  {String{6..128}}     password  Customer's password
+   * @apiParam  {String}             groupOrRoomId     Customer's groupOrRoomId
+   * @apiParam  {String}     type  type of groupOrRoomId
    * @apiParam  {String{..128}}      [name]    Customer's name
    * @apiParam  {String=customer,admin}  [role]    Customer's role
    * (You must be an admin to change the customer's role)
@@ -137,7 +137,7 @@ router
    * @apiSuccess {String}  id         Customer's id
    * @apiSuccess {Number}  accountNumber         Customer's accountNumber
    * @apiSuccess {String}  name       Customer's name
-   * @apiSuccess {String}  email      Customer's email
+   * @apiSuccess {String}  groupOrRoomId      Customer's groupOrRoomId
    * @apiSuccess {String}  role       Customer's role
    * @apiSuccess {Date}    createdAt  Timestamp
    *
@@ -157,17 +157,17 @@ router
    *
    * @apiHeader {String} Athorization  Customer's access token
    *
-   * @apiParam  {String}             email     Customer's email
-   * @apiParam  {String{6..128}}     password  Customer's password
-   * @apiParam  {String{..128}}      [name]    Customer's name
-   * @apiParam  {String=customer,admin}  [role]    Customer's role
+   * @apiParam  {String}             groupOrRoomId    groupOrRoomId
+ * @apiParam    {String}             type             type of groupOrRoomId
+   * @apiParam  {String{..128}}      [name]           Customer's name
+   * @apiParam  {String=customer,admin}  [role]       Customer's role
    * (You must be an admin to change the customer's role)
    *
-   * @apiSuccess {String}  id         Customer's id
-   * @apiSuccess {Number}  accountNumber         Customer's accountNumber
-   * @apiSuccess {String}  name       Customer's name
-   * @apiSuccess {String}  email      Customer's email
-   * @apiSuccess {String}  role       Customer's role
+   * @apiSuccess {String}  id                 Customer's id
+   * @apiSuccess {Number}  accountNumber      Customer's accountNumber
+   * @apiSuccess {String}  name               Customer's name
+   * @apiSuccess {String}  groupOrRoomId      Customer's groupOrRoomId
+   * @apiSuccess {String}  role               Customer's role
    * @apiSuccess {Date}    createdAt  Timestamp
    *
    * @apiError (Bad Request 400)  ValidationError  Some parameters may contain invalid values
