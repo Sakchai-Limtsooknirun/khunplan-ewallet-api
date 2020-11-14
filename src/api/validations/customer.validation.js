@@ -6,7 +6,7 @@ module.exports = {
   // POST /v1/ewallet/transfer
   walletTransfer: {
     body: {
-      amount: Joi.number().positive().precision(2).min(10).max(50000).required(),
+      amount: Joi.number().positive().precision(2).min(10).required(),
       destinationAccountNumber: Joi.number().required()
     },
   },
@@ -14,7 +14,7 @@ module.exports = {
   // POST /v1/ewallet/deposit
   walletDeposit: {
     body: {
-      amount: Joi.number().positive().precision(2).min(10).max(50000).required(),
+      amount: Joi.number().positive().precision(2).min(10).required(),
       card: Joi.string().creditCard().required()
     },
   },
@@ -25,7 +25,7 @@ module.exports = {
       page: Joi.number().min(1),
       perPage: Joi.number().min(1).max(100),
       name: Joi.string(),
-      email: Joi.string(),
+      groupOrRoomId: Joi.string(),
       role: Joi.string().valid(Customer.roles),
     },
   },
@@ -33,8 +33,8 @@ module.exports = {
   // POST /v1/customers
   createCustomer: {
     body: {
-      email: Joi.string().email().required(),
-      password: Joi.string().min(6).max(128).required(),
+      groupOrRoomId: Joi.string().required(),
+      type: Joi.string().required(),
       name: Joi.string().max(128),
       role: Joi.string().valid(Customer.roles),
     },
@@ -43,8 +43,8 @@ module.exports = {
   // PUT /v1/customers/:customerId
   replaceCustomer: {
     body: {
-      email: Joi.string().email().required(),
-      password: Joi.string().min(6).max(128).required(),
+      groupOrRoomId: Joi.string().required(),
+      type: Joi.string().required(),
       name: Joi.string().max(128),
       role: Joi.string().valid(Customer.roles),
     },
@@ -56,8 +56,8 @@ module.exports = {
   // PATCH /v1/customers/:customerId
   updateCustomer: {
     body: {
-      email: Joi.string().email(),
-      password: Joi.string().min(6).max(128),
+      groupOrRoomId: Joi.string(),
+      type: Joi.string(),
       name: Joi.string().max(128),
       role: Joi.string().valid(Customer.roles),
     },
