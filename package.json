@@ -65,6 +65,7 @@
     "passport-http-bearer": "^1.0.1",
     "passport-jwt": "3.0.0",
     "opn-cli": "^3.1.0",
+    "pm2": "^2.4.6",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
