@@ -42,22 +42,21 @@ router
 router
   .route('/transactions')
   /**
-   * @api {get} v1/ewallet/transactions Get Customer Balance
+   * @api {get} v1/ewallet/transactions Get transactions information
    * @apiDescription Get customer balance information
    * @apiVersion 1.0.0
-   * @apiName GetBalance
+   * @apiName get transactions
    * @apiGroup eWallet
    * @apiPermission customer
    *
    * @apiHeader {String} Athorization  Customer's access token
    *
-   * @apiSuccess {String}  id                 Customer's id
-   * @apiSuccess {Number}  accountNumber      Customer's accountNumber
-   * @apiSuccess {String}  name               Customer's name
-   * @apiSuccess {String}  groupOrRoomId      Customer's groupOrRoomId
-   * @apiSuccess {String}  role               Customer's role
-   * @apiSuccess {String}  balance            Customer's balance
-   * @apiSuccess {Date}    createdAt          Timestamp
+   * @apiSuccess {String}  id                    Customer's id
+   * @apiSuccess {Number}  accountNumber         Customer's accountNumber
+   * @apiSuccess {String}  operation             Customer's operation
+   * @apiSuccess {String}  reference         Customer's reference
+   * @apiSuccess {String}  amount                  Customer's amount
+   * @apiSuccess {Date}    createdAt             Timestamp
    *
    * @apiError (Unauthorized 401) Unauthorized Only authenticated customers can access the data
    * @apiError (Forbidden 403)    Forbidden    Only customer with same id or admins can access the data
