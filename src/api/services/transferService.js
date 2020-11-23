@@ -7,7 +7,7 @@ const httpStatus = require('http-status');
 const Customer = require('../models/customer.model');
 const Transaction = require('../models/transaction.model');
 
-exports.transfer = async (accountNumber, amount, destinationAccountNumber) => {
+exports.transfer = async (accountNumber, amount, destinationAccountNumber, detail, category) => {
     const reference = uuidv4();
 
     const transaction = new Transaction();
@@ -16,6 +16,8 @@ exports.transfer = async (accountNumber, amount, destinationAccountNumber) => {
     transaction.accountNumber = accountNumber;
     transaction.destinationAccountNumber = destinationAccountNumber;
     transaction.reference = 'transfer_to_account:' + destinationAccountNumber;
+    transaction.detail = detail;
+    transaction.category = category
     const savedTransaction = await transaction.save();
     const savedCustomer = await Customer.findOne({ 'accountNumber': accountNumber });
 
@@ -24,6 +26,8 @@ exports.transfer = async (accountNumber, amount, destinationAccountNumber) => {
     transactionBeneficiary.operation = 'transfer';
     transactionBeneficiary.accountNumber = destinationAccountNumber;
     transactionBeneficiary.reference = 'transfer_from_account:' + accountNumber;
+    // transactionBeneficiary.detail = detail;
+    // transactionBeneficiary.category = category
     const savedTransactionBeneficiary = await transactionBeneficiary.save();
 
     const response = { transaction: transaction.transform(), customer: savedCustomer.transformBalance() }

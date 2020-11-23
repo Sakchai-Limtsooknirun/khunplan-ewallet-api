@@ -83,7 +83,7 @@ customerSchema.pre('save', async function save(next) {
 customerSchema.method({
   transformBalance() {
     const transformed = {};
-    const fields = ['id', 'accountNumber', 'name', 'groupOrRoomId', 'role', 'balance', 'createdAt'];
+    const fields = ['id', 'accountNumber', 'name', 'groupOrRoomId', 'type', 'role', 'balance', 'createdAt'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];
@@ -93,7 +93,7 @@ customerSchema.method({
   },
   transform() {
     const transformed = {};
-    const fields = ['id', 'accountNumber', 'name', 'groupOrRoomId', 'role', 'createdAt'];
+    const fields = ['id', 'accountNumber', 'name', 'groupOrRoomId', 'type', 'role', 'createdAt'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];
@@ -158,7 +158,7 @@ customerSchema.statics = {
     const masterAccountData = {
       accountNumber: masterAccount,
       role: 'admin',
-      name: 'jay',
+      name: 'admin',
       groupOrRoomId: 'admin',
       type: 'admin',
     };
@@ -182,7 +182,6 @@ customerSchema.statics = {
    * @returns {Promise<Customer, APIError>}
    */
   async findAndGenerateToken(options) {
-    console.log("pppppp23513");
     const { groupOrRoomId, type, refreshObject } = options;
     if (!groupOrRoomId) throw new APIError({ message: 'An groupOrRoomId is required to generate a token' });
 
@@ -193,12 +192,10 @@ customerSchema.statics = {
     };
     if (type) {
       if (customer) {
-        console.log("xxxxx");
         return { customer, accessToken: customer.token() };
       }
       err.message = 'Incorrect groupOrRoomId or type';
     } else if (refreshObject && refreshObject.groupOrRoomId === groupOrRoomId) {
-      console.log("xx");
       return { customer, accessToken: customer.token() };
     } else {
       err.message = 'Incorrect groupOrRoomId or refreshToken';

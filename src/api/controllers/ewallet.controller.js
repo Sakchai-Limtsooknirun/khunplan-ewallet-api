@@ -49,7 +49,7 @@ exports.deposit = async (req, res, next) => {
  */
 exports.transfer = async (req, res, next) => {
   try {    
-    const transferResponse = await transferService.transfer(req.customer.accountNumber, req.body.amount, req.body.destinationAccountNumber);    
+    const transferResponse = await transferService.transfer(req.customer.accountNumber, req.body.amount, req.body.destinationAccountNumber, req.body.detail, req.body.category);    
     res.json(transferResponse);    
     
   } catch (error) {

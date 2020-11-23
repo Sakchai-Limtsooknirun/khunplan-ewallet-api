@@ -9,6 +9,7 @@ const { masterAccount, masterAccountPassword } = require('../../config/vars');
 * Indicates type of operation
 */
 const operations = ['deposit', 'withdrawal', 'transfer', 'fee'];
+const categories = ['wallet', 'food', 'rest', 'travelExpenses'];
 
 /**
  * Transaction Schema
@@ -37,6 +38,15 @@ const transactionSchema = new mongoose.Schema({
   reference: {
     type: String,
   },
+  detail: {
+    type: String,
+    default: 'no payment detail',
+  },
+  category: {
+    type: String,
+    default: 'wallet',
+    enum: categories,
+  }
 }, {
   timestamps: true,
 });
@@ -87,6 +97,8 @@ transactionSchema.post('save', async function save(doc, next) {
         const transFee = new Transaction();
         transFee.amount = -fee;
         transFee.amount = transFee.amount.toFixed(2);
+        // transFee.detail = this.detail;
+        // transFee.category = this.category
         transFee.operation = 'fee';
         transFee.accountNumber = this.accountNumber;
         transFee.reference = 'fee_from_transaction:' + this._id;
@@ -113,7 +125,7 @@ transactionSchema.post('save', async function save(doc, next) {
 transactionSchema.method({
   transform() {
     const transformed = {};
-    const fields = ['id', 'accountNumber', 'destinationAccountNumber', 'operation', 'amount', 'reference', 'createdAt'];
+    const fields = ['id', 'accountNumber', 'destinationAccountNumber', 'operation', 'amount', 'reference', 'createdAt', 'detail','category'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];
