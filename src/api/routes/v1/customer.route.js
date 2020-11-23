@@ -33,6 +33,7 @@ router
    * @apiParam  {Number{1-100}}      [perPage=1]  Customers per page
    * @apiParam  {String}             [name]       Customer's name
    * @apiParam  {String}             [groupOrRoomId]      Customer's groupOrRoomId
+   * @apiParam  {String}            [type]           Customer's group or roomId
    * @apiParam  {String=customer,admin}  [role]       Customer's role
    *
    * @apiSuccess {Object[]} customers List of customers.
@@ -60,6 +61,7 @@ router
    * @apiSuccess {Number}  accountNumber         Customer's accountNumber
    * @apiSuccess (Created 201) {String}  name       Customer's name
    * @apiSuccess (Created 201) {String}  groupOrRoomId      Customer's groupOrRoomId
+   * @apiSuccess (Created 201) {String}  type           Customer's group or roomId
    * @apiSuccess (Created 201) {String}  role       Customer's role
    * @apiSuccess (Created 201) {Date}    createdAt  Timestamp
    *
@@ -86,6 +88,7 @@ router
    * @apiSuccess {Number}  accountNumber         Customer's accountNumber
    * @apiSuccess {String}  name       Customer's name
    * @apiSuccess {String}  groupOrRoomId      Customer's groupOrRoomId
+   * @apiSuccess   {String}   type               Customer's group or roomId
    * @apiSuccess {String}  role       Customer's role
    * @apiSuccess {Date}    createdAt  Timestamp
    *
@@ -110,6 +113,7 @@ router
    * @apiSuccess {Number}  accountNumber         Customer's accountNumber
    * @apiSuccess {String}  name       Customer's name
    * @apiSuccess {String}  groupOrRoomId      Customer's groupOrRoomId
+   * @apiSuccess   {String}   type               Customer's group or roomId
    * @apiSuccess {String}  role       Customer's role
    * @apiSuccess {Date}    createdAt  Timestamp
    *
@@ -132,6 +136,7 @@ router
    * @apiParam  {String}     type  type of groupOrRoomId
    * @apiParam  {String{..128}}      [name]    Customer's name
    * @apiParam  {String=customer,admin}  [role]    Customer's role
+   * @apiParam  {String}            [type]           Customer's group or roomId
    * (You must be an admin to change the customer's role)
    *
    * @apiSuccess {String}  id         Customer's id
@@ -158,7 +163,7 @@ router
    * @apiHeader {String} Athorization  Customer's access token
    *
    * @apiParam  {String}             groupOrRoomId    groupOrRoomId
- * @apiParam    {String}             type             type of groupOrRoomId
+   * @apiParam    {String}             type             type of groupOrRoomId
    * @apiParam  {String{..128}}      [name]           Customer's name
    * @apiParam  {String=customer,admin}  [role]       Customer's role
    * (You must be an admin to change the customer's role)
@@ -168,6 +173,7 @@ router
    * @apiSuccess {String}  name               Customer's name
    * @apiSuccess {String}  groupOrRoomId      Customer's groupOrRoomId
    * @apiSuccess {String}  role               Customer's role
+   * @apiSuccess   {String}   type               Customer's group or roomId
    * @apiSuccess {Date}    createdAt  Timestamp
    *
    * @apiError (Bad Request 400)  ValidationError  Some parameters may contain invalid values

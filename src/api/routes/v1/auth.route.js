@@ -33,6 +33,7 @@ const router = express.Router();
  * @apiSuccess (Created 201) {Number}  customer.accountNumber         Customer's accountNumber
  * @apiSuccess (Created 201) {String}  customer.name       Customer's name
  * @apiSuccess (Created 201) {String}  customer.groupOrRoomId      Customer's groupOrRoomId
+ * @apiSuccess (Created 201) {String}  customer.type      Customer's type of groupOrRoomId
  * @apiSuccess (Created 201) {String}  customer.role       Customer's role
  * @apiSuccess (Created 201) {Date}    customer.createdAt  Timestamp
  *
@@ -63,12 +64,13 @@ router.route('/register')
  * @apiSuccess  {String}  customer.id             Customer's id
  * @apiSuccess  {Number}  customer.accountNumber  Customer's accountNumber
  * @apiSuccess  {String}  customer.name           Customer's name
- * @apiSuccess  {String}  customer.groupOrRoomId  Customer's email
+ * @apiSuccess  {String}  customer.groupOrRoomId  Customer's groupOrRoomId
+ * @apiSuccess {String}   customer.type      Customer's type of groupOrRoomId
  * @apiSuccess  {String}  customer.role           Customer's role
  * @apiSuccess  {Date}    customer.createdAt      Timestamp
  *
  * @apiError (Bad Request 400)  ValidationError  Some parameters may contain invalid values
- * @apiError (Unauthorized 401)  Unauthorized     Incorrect email or password
+ * @apiError (Unauthorized 401)  Unauthorized     Incorrect groupOrRoomId or type
  */
 router.route('/login')
   .post(validate(login), controller.login);
@@ -91,7 +93,7 @@ router.route('/login')
  * @apiSuccess {Number}  expiresIn     Access Token's expiration time in miliseconds
  *
  * @apiError (Bad Request 400)  ValidationError  Some parameters may contain invalid values
- * @apiError (Unauthorized 401)  Unauthorized     Incorrect email or refreshToken
+ * @apiError (Unauthorized 401)  Unauthorized     Incorrect groupOrRoomId or refreshToken
  */
 router.route('/refresh-token')
   .post(validate(refresh), controller.refresh);

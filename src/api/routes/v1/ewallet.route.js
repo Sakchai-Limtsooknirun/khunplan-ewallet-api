@@ -30,6 +30,7 @@ router
    * @apiSuccess {String}  name                  Customer's name
    * @apiSuccess {String}  groupOrRoomId         Customer's groupOrRoomId
    * @apiSuccess {String}  role                  Customer's role
+   * @apiSuccess {String}  type                  Customer's type of groupOrRoomId
    * @apiSuccess {String}  balance               Customer's balance
    * @apiSuccess {Date}    createdAt             Timestamp
    *
@@ -55,6 +56,8 @@ router
    * @apiSuccess {Number}  accountNumber         Customer's accountNumber
    * @apiSuccess {String}  operation             Customer's operation
    * @apiSuccess {String}  reference         Customer's reference
+   * @apiSuccess {String}  detail         Customer's detail
+   * @apiSuccess {String}  category         Customer's category
    * @apiSuccess {String}  amount                  Customer's amount
    * @apiSuccess {Date}    createdAt             Timestamp
    *
@@ -94,6 +97,7 @@ router
    * @apiSuccess  {String}  customer.name           Customer's name
    * @apiSuccess  {String}  customer.groupOrRoomId  Customer's groupOrRoomId
    * @apiSuccess  {String}  customer.role           Customer's role
+   * @apiSuccess  {String}  customer.type           Customer's group or roomId
    * @apiSuccess  {Date}    customer.createdAt      Timestamp
    *
    * @apiError (Bad Request 400)   ValidationError  Some parameters may contain invalid values
@@ -124,6 +128,8 @@ router
    * @apiSuccess  {String}  transaction.operation  Transaction's type of operation (deposit, withdrawal, transfer, fee)
    * @apiSuccess  {Number}  transaction.amount     Transaction's amount
    * @apiSuccess  {Number}  transaction.reference     Transaction's reference
+   * @apiSuccess {String}  transaction.detail         Customer's detail
+   * @apiSuccess {String}  transaction.category         Customer's category
    * @apiSuccess  {Date}    transaction.createdAt      Timestamp
    *
    * @apiSuccess {Object}  customer       Customer.
@@ -131,6 +137,7 @@ router
    * @apiSuccess  {Number}  customer.accountNumber  Customer's accountNumber
    * @apiSuccess  {String}  customer.name           Customer's name
    * @apiSuccess  {String}  customer.groupOrRoomId  Customer's groupOrRoomId
+   * @apiSuccess  {String}  customer.type           Customer's group or roomId
    * @apiSuccess  {String}  customer.role           Customer's role
    * @apiSuccess  {Date}    customer.createdAt      Timestamp
    *
@@ -162,6 +169,8 @@ router
    * @apiSuccess  {String}  transaction.operation  Transaction's type of operation (deposit, withdrawal, transfer, fee)
    * @apiSuccess  {Number}  transaction.amount     Transaction's amount
    * @apiSuccess  {Number}  transaction.reference     Transaction's reference
+   * @apiSuccess {String}  transaction.detail         Customer's detail
+   * @apiSuccess {String}  transaction.category         Customer's category
    * @apiSuccess  {Date}    transaction.createdAt      Timestamp
    *
    * @apiSuccess {Object}  customer       Customer.
@@ -169,6 +178,7 @@ router
    * @apiSuccess  {Number}  customer.accountNumber  Customer's accountNumber
    * @apiSuccess  {String}  customer.name           Customer's name
    * @apiSuccess  {String}  customer.groupOrRoomId  Customer's groupOrRoomId
+   * @apiSuccess  {String}  customer.type           Customer's group or roomId
    * @apiSuccess  {String}  customer.role           Customer's role
    * @apiSuccess  {Date}    customer.createdAt      Timestamp
    *
