@@ -56,6 +56,10 @@ const transactionSchema = new mongoose.Schema({
     type: String,
     default: 'main',
     enum: pocketType
+  },
+  lineUserId: {
+    type: String,
+    default: 'user undefind',
   }
 }, {
   timestamps: true,
@@ -102,7 +106,8 @@ transactionSchema.post('save', async function save(doc, next) {
             currentCustomer.balanceRestPocket = currentCustomer.balanceRestPocket.toFixed(2); 
             currentCustomer.balanceOtherPocket += this.otherAmount;
             currentCustomer.balanceOtherPocket = currentCustomer.balanceOtherPocket.toFixed(2);  
-        // }
+        
+            // }
         // else if(this.category==='hotel') {
         //   if(validBalance){
         //     currentCustomer.balance += this.amount;
@@ -176,7 +181,7 @@ transactionSchema.post('save', async function save(doc, next) {
 transactionSchema.method({
   transform() {
     const transformed = {};
-    const fields = ['id', 'accountNumber', 'destinationAccountNumber', 'operation', 'amount', 'balanceHotelPocket', 'balanceRestPocket', 'balanceOtherPocket', 'reference', 'createdAt', 'detail','category'];
+    const fields = ['id', 'accountNumber', 'destinationAccountNumber', 'operation', 'amount', 'balanceHotelPocket', 'balanceRestPocket', 'balanceOtherPocket', 'reference', 'createdAt', 'detail','category', 'lineUserId'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];

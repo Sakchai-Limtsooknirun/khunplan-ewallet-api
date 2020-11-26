@@ -49,6 +49,10 @@ const gatewayTransactionSchema = new mongoose.Schema({
     default: 'main',
     enum: pocketType
   },
+  lineUserId: {
+    type: String,
+    default: 'user undefind',
+  },
   // amountMiniPocket1: {
   //   type: Number,
   //   default: 0,

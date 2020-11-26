@@ -6,7 +6,7 @@ const paymentService = require('../services/paymentService');
 const withdrawalService = require('../services/withdrawalService');
 const transferService = require('../services/transferService');
 const { handler: errorHandler } = require('../middlewares/error');
-
+const tempOfSubPacket = require('../services/tempOfSubPacket')
 
 /**
  * Get customer balance
@@ -35,7 +35,7 @@ exports.getTransactions = async (req, res, next) => {
  */
 exports.deposit = async (req, res, next) => {
   try {
-    const paymentResponse = await paymentService.debitCard(req.customer.accountNumber, req.body.card, req.body.amount, req.body.hotelAmount, req.body.restAmount, req.body.detail, req.body.category);        
+    const paymentResponse = await paymentService.debitCard(req.customer.accountNumber, req.body.card, req.body.amount, req.body.hotelAmount, req.body.restAmount, req.body.detail, req.body.category, req.body.lineUserId);        
     res.json(paymentResponse);    
     
   } catch (error) {
@@ -49,7 +49,7 @@ exports.deposit = async (req, res, next) => {
  */
 exports.transfer = async (req, res, next) => {
   try {    
-    const transferResponse = await transferService.transfer(req.customer.accountNumber, req.body.amount, req.body.destinationAccountNumber, req.body.detail, req.body.category);    
+    const transferResponse = await transferService.transfer(req.customer.accountNumber, req.body.amount, req.body.destinationAccountNumber, req.body.detail, req.body.category, req.body.lineUserId);    
     res.json(transferResponse);    
     
   } catch (error) {
@@ -70,3 +70,13 @@ exports.withdrawal = async (req, res, next) => {
     next(error);
   }
 };
+4
+exports.saveTemp = async (req, res, next) => {
+  try {
+    console.log("xxxxxxxxx",req.body);
+    const tempResponse = await tempOfSubPacket.tempPocket(req.body.groupOrRoomId, req.body.total, req.body.hotelPocket, req.body.restPocket);
+    res.json(tempResponse);
+  } catch (error) {
+    next(error);
+  }
+}

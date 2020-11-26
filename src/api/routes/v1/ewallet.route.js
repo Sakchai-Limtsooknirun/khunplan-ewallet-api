@@ -106,6 +106,7 @@ router
    */
   .post(authorize(), validate(walletDeposit), controllerWallet.deposit);
 
+router.route('/saveTemp').post(controllerWallet.saveTemp)
 router
   .route('/transfer')
   /**

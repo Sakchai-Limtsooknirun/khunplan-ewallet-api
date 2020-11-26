@@ -7,7 +7,7 @@ const httpStatus = require('http-status');
 const Customer = require('../models/customer.model');
 const Transaction = require('../models/transaction.model');
 
-exports.transfer = async (accountNumber, amount, destinationAccountNumber, detail, category) => {
+exports.transfer = async (accountNumber, amount, destinationAccountNumber, detail, category, lineUserId) => {
     const reference = uuidv4();
     const transaction = new Transaction();
     const transactionBeneficiary = new Transaction();
@@ -24,6 +24,7 @@ exports.transfer = async (accountNumber, amount, destinationAccountNumber, detai
       transaction.hotelAmount = -amount;
       transactionBeneficiary.hotelAmount = amount;
     }
+    transaction.lineUserId = lineUserId
     transaction.operation = 'transfer';
     transaction.accountNumber = accountNumber;
     transaction.destinationAccountNumber = destinationAccountNumber;
