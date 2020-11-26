@@ -70,7 +70,6 @@ customerSchema.pre('save', async function save(next) {
 
     // const hash = await bcrypt.hash(this.password, rounds);
     // this.password = hash;
-    console.log("pppppp");
     return next();
   } catch (error) {
     return next(error);
