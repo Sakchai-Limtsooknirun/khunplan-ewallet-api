@@ -14,7 +14,7 @@ module.exports = {
   // POST /v1/ewallet/deposit
   walletDeposit: {
     body: {
-      amount: Joi.number().positive().precision(2).min(10).required(),
+      amount: Joi.number().positive().precision(2).min(10),
       card: Joi.string().creditCard().required()
     },
   },

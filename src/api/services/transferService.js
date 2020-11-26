@@ -9,9 +9,21 @@ const Transaction = require('../models/transaction.model');
 
 exports.transfer = async (accountNumber, amount, destinationAccountNumber, detail, category) => {
     const reference = uuidv4();
-
     const transaction = new Transaction();
-    transaction.amount = -amount;
+    const transactionBeneficiary = new Transaction();
+    if (category === 'main') {
+      transaction.amount = -amount;
+      transaction.otherAmount = -amount;
+      transactionBeneficiary.amount = amount;
+    } else if (category === 'rest') {
+      transaction.amount = -amount;
+      transaction.restAmount = -amount;
+      transactionBeneficiary.restAmount = amount;
+    } else if (category === 'hotel') {
+      transaction.amount = -amount;
+      transaction.hotelAmount = -amount;
+      transactionBeneficiary.hotelAmount = amount;
+    }
     transaction.operation = 'transfer';
     transaction.accountNumber = accountNumber;
     transaction.destinationAccountNumber = destinationAccountNumber;
@@ -21,8 +33,6 @@ exports.transfer = async (accountNumber, amount, destinationAccountNumber, detai
     const savedTransaction = await transaction.save();
     const savedCustomer = await Customer.findOne({ 'accountNumber': accountNumber });
 
-    const transactionBeneficiary = new Transaction();
-    transactionBeneficiary.amount = amount;
     transactionBeneficiary.operation = 'transfer';
     transactionBeneficiary.accountNumber = destinationAccountNumber;
     transactionBeneficiary.reference = 'transfer_from_account:' + accountNumber;

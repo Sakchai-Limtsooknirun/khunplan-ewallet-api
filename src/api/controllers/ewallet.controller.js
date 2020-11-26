@@ -35,7 +35,7 @@ exports.getTransactions = async (req, res, next) => {
  */
 exports.deposit = async (req, res, next) => {
   try {
-    const paymentResponse = await paymentService.debitCard(req.customer.accountNumber, req.body.card, req.body.amount);        
+    const paymentResponse = await paymentService.debitCard(req.customer.accountNumber, req.body.card, req.body.amount, req.body.hotelAmount, req.body.restAmount, req.body.detail, req.body.category);        
     res.json(paymentResponse);    
     
   } catch (error) {

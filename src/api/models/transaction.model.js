@@ -9,7 +9,7 @@ const { masterAccount, masterAccountPassword } = require('../../config/vars');
 * Indicates type of operation
 */
 const operations = ['deposit', 'withdrawal', 'transfer'];
-
+const pocketType = ['main', 'hotel', 'rest', 'other']
 /**
  * Transaction Schema
  * @private
@@ -32,7 +32,18 @@ const transactionSchema = new mongoose.Schema({
   amount: {
     type: Number,
     default: 0,
-    required: true,
+  },
+  hotelAmount: {
+    type: Number,
+    default: 0
+  },
+  restAmount: {
+    type: Number,
+    default: 0
+  },
+  otherAmount: {
+    type: Number,
+    default: 0
   },
   reference: {
     type: String,
@@ -43,7 +54,8 @@ const transactionSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    default: 'wallet',
+    default: 'main',
+    enum: pocketType
   }
 }, {
   timestamps: true,
@@ -64,13 +76,57 @@ transactionSchema.pre('save', async function save(next) {
   return next();
 });
 
-
+const checkTotalBalance = (customer) => {
+  mainBalance = customer.balance
+  hotalBalance = customer.balanceHotelPocket
+  restBalance = customer.balanceRestPocket
+  otherBalance = customer.balanceOtherPocket
+  total = hotalBalance + restBalance + otherBalance
+  console.log("main: ", mainBalance, "total: ",total);
+  if(mainBalance >= total) {
+    return true
+  } else throw 'invalid balance'
+}
 transactionSchema.post('save', async function save(doc, next) {
   try{
     if(this.wasNew){
       const currentCustomer = await Customer.findOne({ 'accountNumber': this.accountNumber });      
-      currentCustomer.balance += this.amount;
-      currentCustomer.balance = currentCustomer.balance.toFixed(2);      
+      const validBalance = checkTotalBalance(currentCustomer)
+      // if(this.category) {
+        // if(this.category==='main'){
+            currentCustomer.balance += this.amount;
+            currentCustomer.balance = currentCustomer.balance.toFixed(2); 
+            currentCustomer.balanceHotelPocket += this.hotelAmount;
+            currentCustomer.balanceHotelPocket = currentCustomer.balanceHotelPocket.toFixed(2);  
+            currentCustomer.balanceRestPocket += this.restAmount;
+            currentCustomer.balanceRestPocket = currentCustomer.balanceRestPocket.toFixed(2); 
+            currentCustomer.balanceOtherPocket += this.otherAmount;
+            currentCustomer.balanceOtherPocket = currentCustomer.balanceOtherPocket.toFixed(2);  
+        // }
+        // else if(this.category==='hotel') {
+        //   if(validBalance){
+        //     currentCustomer.balance += this.amount;
+        //     currentCustomer.balance = currentCustomer.balance.toFixed(2);
+        //     currentCustomer.balanceHotelPocket += this.amount;
+        //     currentCustomer.balanceHotelPocket = currentCustomer.balanceHotelPocket.toFixed(2); 
+        //   } 
+        // }else if(this.category==='rest') {
+        //   if(validBalance){ 
+        //     currentCustomer.balance += this.amount;
+        //     currentCustomer.balance = currentCustomer.balance.toFixed(2);
+        //     currentCustomer.balanceRestPocket += this.amount;
+        //     currentCustomer.balanceRestPocket = currentCustomer.balanceRestPocket.toFixed(2);  
+        //   }
+        // }else if(this.category==='other') {
+        //   if(validBalance){ 
+        //     currentCustomer.balance += this.amount;
+        //     currentCustomer.balance = currentCustomer.balance.toFixed(2);
+        //     currentCustomer.balanceOtherPocket += this.amount;
+        //     currentCustomer.balanceOtherPocket = currentCustomer.balanceOtherPocket.toFixed(2); 
+        //   }
+        // }
+      // }
+      
       const savedCustomer = await currentCustomer.save();     
       
     }
@@ -112,7 +168,6 @@ transactionSchema.post('save', async function save(doc, next) {
   } catch (error) {
     return next(error);
   }
-
 });
 
 /**
@@ -121,7 +176,7 @@ transactionSchema.post('save', async function save(doc, next) {
 transactionSchema.method({
   transform() {
     const transformed = {};
-    const fields = ['id', 'accountNumber', 'destinationAccountNumber', 'operation', 'amount', 'reference', 'createdAt', 'detail','category'];
+    const fields = ['id', 'accountNumber', 'destinationAccountNumber', 'operation', 'amount', 'balanceHotelPocket', 'balanceRestPocket', 'balanceOtherPocket', 'reference', 'createdAt', 'detail','category'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];
@@ -147,9 +202,9 @@ transactionSchema.statics = {
       page = 1, perPage = 30, accountNumber,
     }) {
       let options = omitBy({ accountNumber }, isNil);
-      if (accountNumber == masterAccount){
-        options = {operation: 'fee'};
-      }
+      // if (accountNumber == masterAccount){
+      //   options = {operation: 'fee'};
+      // }
   
       return this.find(options)
         .sort({ createdAt: -1 })

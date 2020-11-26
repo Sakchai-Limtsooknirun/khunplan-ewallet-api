@@ -27,7 +27,6 @@ const customerSchema = new mongoose.Schema({
     required: true,
     unique: true,
     trim: true,
-    lowercase: true,
   },
   type: {
     type: String,
@@ -46,9 +45,20 @@ const customerSchema = new mongoose.Schema({
   },
   balance: {
     type: Number,
-    min: 0,
     default: 0
   },
+  balanceHotelPocket: {
+    type: Number,
+    default: 0
+  },
+  balanceRestPocket: {
+    type: Number,
+    default: 0
+  },
+  balanceOtherPocket: {
+    type: Number,
+    default: 0
+  }
 
 }, {
   timestamps: true,
@@ -82,7 +92,7 @@ customerSchema.pre('save', async function save(next) {
 customerSchema.method({
   transformBalance() {
     const transformed = {};
-    const fields = ['id', 'accountNumber', 'name', 'groupOrRoomId', 'type', 'role', 'balance', 'createdAt'];
+    const fields = ['id', 'accountNumber', 'name', 'groupOrRoomId', 'type', 'role', 'balance', 'balanceHotelPocket', 'balanceRestPocket', 'balanceOtherPocket','createdAt'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];

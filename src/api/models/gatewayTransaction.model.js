@@ -7,6 +7,8 @@ const moment = require('moment-timezone');
  * Gateway Transaction Schema
  * @private
  */
+const pocketType = ['main', 'hotel', 'rest', 'other']
+
 const gatewayTransactionSchema = new mongoose.Schema({
   transactionId: {
     type: String,
@@ -25,6 +27,40 @@ const gatewayTransactionSchema = new mongoose.Schema({
     default: 0,
     required: true,
   },
+  hotelAmount: {
+    type: Number,
+    default: 0
+  },
+  restAmount: {
+    type: Number,
+    default: 0
+  },
+  // otherAmount: {
+  //   type: Number,
+  //   min: 0,
+  //   default: 0
+  // },
+  detail: {
+    type: String,
+    default: 'no payment detail',
+  },
+  category: {
+    type: String,
+    default: 'main',
+    enum: pocketType
+  },
+  // amountMiniPocket1: {
+  //   type: Number,
+  //   default: 0,
+  // },
+  // amountMiniPocket2: {
+  //   type: Number,
+  //   default: 0,
+  // },
+  // amountMiniPocket3: {
+  //   type: Number,
+  //   default: 0,
+  // },
   authorizationCode: {
     type: Number,
     required: true,
@@ -39,7 +75,7 @@ const gatewayTransactionSchema = new mongoose.Schema({
 gatewayTransactionSchema.method({
   transform() {
     const transformed = {};
-    const fields = ['transactionId', 'status', 'paymentDate', 'amount', 'authorizationCode'];
+    const fields = ['transactionId', 'status', 'paymentDate', 'amount', 'hotelAmount', 'restAmount', 'authorizationCode'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];
